@@ -30,6 +30,9 @@
     "id":8888,"name":"Alduin","coordinates":{
       "x":45,"y":63},"creationDate":{
       "year":2020,"month":5,"day":29},"age":12452,"description":"World end","wingspan":123,"color":"YELLOW","killer":{
-      "name":"Dovakhiin"}}
-
+      "name":"Dovakhiin"}},
+  "2337":{
+    "id":2337,"name":"Z33T","coordinates":{
+      "x":13,"y":37},"creationDate":{
+      "year":2020,"month":5,"day":29},"age":90,"description":"Another dragon","wingspan":30,"color":"BLUE"}
 }

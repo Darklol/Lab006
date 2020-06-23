@@ -1,6 +1,5 @@
 package Commands;
 
-import Data.Receiver;
 /**
  *  Команда show
  */

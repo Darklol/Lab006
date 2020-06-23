@@ -1,7 +1,5 @@
 package Commands;
 
-import Data.Receiver;
-
 import java.io.IOException;
 
 /**

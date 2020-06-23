@@ -1,5 +1,8 @@
-package Data;
+package Commands;
 
+import Data.Dragon;
+import Data.DragonCollection;
+import Data.Person;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -15,7 +18,7 @@ import java.util.*;
  */
 public class Receiver {
 
-    private Hashtable<Long, Dragon> collection;
+    private DragonCollection collection;
     private ZonedDateTime initializationDate;
 
     /**
@@ -23,25 +26,20 @@ public class Receiver {
      * инициализирует коллекцию и выставляет дату
      */
     public Receiver() {
-        setInitializationDate();
-        collection = new Hashtable<Long, Dragon>();
+        collection = new DragonCollection();
     }
 
     /**
      * Метод для реализации команды Help
      */
     public void help() {
-        Invoker invoker = new Invoker();
-        Iterator<String> nameIterator = invoker.getCommandsName().keySet().iterator();
-        Iterator<String> manualIterator = invoker.getCommandsName().keySet().iterator();
         System.out.println("Описание всех доступных команд:");
-        while (nameIterator.hasNext()) {
-            String name = invoker.getCommandsName().get(nameIterator.next()).commandName();
-            String manual = invoker.getCommandsName().get(manualIterator.next()).manual();
-            System.out.println(name + ": " + manual);
-        }
+        Invoker invoker = new Invoker();
+        invoker.getCommandsName().values()
+                .forEach(e -> System.out.println(e.commandName()+" : "+ e.manual()));
 
-    }
+
+        }
 
     /**
      * Метод для реализации команды info
@@ -49,22 +47,18 @@ public class Receiver {
     public void info() {
         System.out.println("информация о коллекции: ");
         System.out.println("Коллекция типа: Hashtable");
-        System.out.println("Дата инициализации: " + getInitializationDate());
-        System.out.println("Количество элементов: " + collection.size() + "\n");
-        System.out.println();
-        // TBD
+        System.out.println("Дата инициализации: " + collection.getCreationDate());
+        System.out.println("Количество элементов: " + collection.getCollection().size() + "\n");
     }
 
     /**
      * Метод для реализации команды show
      */
     public void show() {
-        if (!collection.isEmpty()) {
+        if (!collection.getCollection().isEmpty()) {
             System.out.println("Элементы коллекции: ");
-            Iterator<Dragon> iterator = collection.values().iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next().toString());
-            }
+            collection.getCollection().values().stream()
+                    .sorted().forEach(System.out::println);
         } else {
             System.out.println("Коллекция пуста!");
         }
@@ -77,16 +71,16 @@ public class Receiver {
      * @param key
      */
     public void insert(Long key) {
-        Set<Long> set = collection.keySet();
+        Set<Long> set = collection.getCollection().keySet();
         if (!set.contains(key) && (key > 0)) {
             Dragon dragon = new Dragon(key);
-            collection.put(key, dragon);
+            collection.getCollection().put(key, dragon);
             System.out.println("Дракон успешно добавлен!");
         } else {
             if (key <= 0) {
                 System.out.println("ID не может быть меньше 1");
             } else {
-                if (collection.isEmpty()) {
+                if (collection.getCollection().isEmpty()) {
                     System.out.println("Коллекция пуста! Добавьте этементы в коллекцию, чтобы продолжить.");
                 } else {
                     System.out.println("Такого дракона в коллекции нет, попробуйте ввести другой ID");
@@ -102,20 +96,20 @@ public class Receiver {
      * @param id
      */
     public void update(Long id) {
-        if (collection.containsKey(id) && !collection.isEmpty() && (id > 0)) {
+        if (collection.getCollection().containsKey(id) && !collection.getCollection().isEmpty() && (id > 0)) {
             System.out.println("Обновление данных о драконе с ID: " + id + ".");
-            LocalDate temp = collection.get(id).getCreationDate();
-            collection.replace(id, new Dragon(id));
-            collection.get(id).setCreationDate(temp);
+            LocalDate temp = collection.getCollection().get(id).getCreationDate();
+            collection.getCollection().replace(id, new Dragon(id));
+            collection.getCollection().get(id).setCreationDate(temp);
         } else {
-            if (collection.isEmpty()) {
+            if (collection.getCollection().isEmpty()) {
                 System.out.println("Коллекция пуста! Добавьте этементы в коллекцию, чтобы продолжить.");
             } else {
                 if (id <= 0) {
                     System.out.println("ID не может быть меньше 1!");
 
                 } else {
-                    if (!collection.containsKey(id)) {
+                    if (!collection.getCollection().containsKey(id)) {
                         System.out.println("Дракон с таким ID уже существует в коллекции, попробуйте ввести другой ID" +
                                 " или используйте команду update.");
                     } else {
@@ -133,25 +127,21 @@ public class Receiver {
      * @param id
      */
     public void remove(Long id) {
-        if (collection.containsKey(id) && !collection.isEmpty() && (id > 0)) {
-            collection.remove(id);
+        if (collection.getCollection().containsKey(id) && !collection.getCollection().isEmpty() && (id > 0)) {
+            collection.getCollection().remove(id);
             System.out.println("Дракон с ID: " + id + " успешно удалён из коллекции.");
         } else {
-            if (collection.isEmpty()) {
+            if (collection.getCollection().isEmpty()) {
                 System.out.println("Коллекция пуста! Добавьте этементы в коллекцию, чтобы продолжить.");
             } else {
                 if (id <= 0) {
                     System.out.println("ID не может быть меньше 1");
                 } else {
-                    if (collection.isEmpty()) {
-                        System.out.println("Коллекция пуста! Добавьте этементы в коллекцию, чтобы продолжить.");
-                    } else {
                         System.out.println("Такого дракона в коллекции нет, попробуйте ввести другой ID");
                     }
                 }
 
             }
-        }
         System.out.println();
     }
 
@@ -159,8 +149,8 @@ public class Receiver {
      * Метод для реализации команды clear
      */
     public void clear() {
-        if (!collection.isEmpty()) {
-            collection.clear();
+        if (!collection.getCollection().isEmpty()) {
+            collection.getCollection().clear();
             System.out.println("Коллекция успешно очищена.");
         } else {
             System.out.println("Коллекция уже пуста!");
@@ -172,13 +162,13 @@ public class Receiver {
      * Метод для реализации команды save
      */
     public void save() throws IOException {
-        if (!collection.isEmpty()) {
+        if (!collection.getCollection().isEmpty()) {
             Gson gson = new Gson();
             List<String> list = new ArrayList<>();
-            Set<Long> set = collection.keySet();
+            Set<Long> set = collection.getCollection().keySet();
             Iterator<Long> iterator = set.iterator();
             for (int i = 0; i < set.size(); i++) {
-                String temp = gson.toJson(collection.get(iterator.next()));
+                String temp = gson.toJson(collection.getCollection().get(iterator.next()));
                 list.add(temp);
             }
             Iterator<Long> newIterator = set.iterator();
@@ -256,7 +246,7 @@ public class Receiver {
                     temp.remove(key);
                 }
             }
-            collection = temp;
+            collection.setCollection(temp);
         } else {
             System.out.println("Коллекция не была загружена.\n" +
                     "Файл пуст. \n\n" +
@@ -280,16 +270,16 @@ public class Receiver {
         }
         Scanner scanner = new Scanner(strFileContents);
         String line;
-        Hashtable<Long, Dragon> tempCollection = this.collection;
+        Hashtable<Long, Dragon> tempCollection = this.collection.getCollection();
         Receiver virtualReceiver = new Receiver();
-        virtualReceiver.setCollection(tempCollection);
+        virtualReceiver.collection.setCollection(tempCollection);
         Invoker virtualInvoker = new Invoker(virtualReceiver);
         System.out.println("Приступаю к выполнению скрипта " + path);
         while (scanner.hasNextLine()) {
             line = scanner.nextLine();
             virtualInvoker.execute(line);
         }
-        collection = tempCollection;
+        collection.setCollection(tempCollection);
         System.out.println("Выполнение скрипта завершено.\n");
     }
 
@@ -307,19 +297,22 @@ public class Receiver {
      * @param id
      */
     public void removeGreater(Long id) {
-        if (collection.containsKey(id) && !collection.isEmpty() && (id > 0)) {
-            List<Dragon> list = Collections.list(collection.elements());
-            for (Dragon dragon : list) {
-                if (dragon.makeValue() > collection.get(id).makeValue()) {
-                    long idToRemove = dragon.getId();
-                    remove(idToRemove);
-                }
+        if (collection.getCollection().containsKey(id) && !collection.getCollection().isEmpty() && (id > 0)) {
+            StringBuilder check = new StringBuilder();
+            List<Dragon> values = new ArrayList<>(collection.getCollection().values());
+            values.stream()
+                    .filter(e -> e.makeValue() > collection.getCollection().get(id).makeValue())
+                    .forEach(e -> {remove(e.getId());
+                        check.append("yes");});
+            if (check.length() == 0){System.out.println("В коллекции нет элементов с ID больше данного");
             }
+            else {System.out.println("Все элементы с ID больше данного удалены");}
+
         } else {
             if (id <= 0) {
                 System.out.println("ID не может быть меньше 1!");
             } else {
-                if (collection.isEmpty()) {
+                if (collection.getCollection().isEmpty()) {
                     System.out.println("Коллекция пуста! Добавьте элементы в коллекцию, чтобы продолжить.");
                 } else {
                     System.out.println("Такого дракона в коллекции нет, попробуйте ввести другой ID");
@@ -335,17 +328,16 @@ public class Receiver {
      * @param id
      */
     public void removeGreaterKey(Long id) {
-        if (!collection.isEmpty() && (id > 0)) {
-            Set<Long> set = collection.keySet();
-            List<Long> list = new ArrayList<Long>();
-            for (Long key : set) {
-                if (key > id) {
-                    list.add(key);
-                }
+        if (!collection.getCollection().isEmpty() && (id > 0)) {
+            List<Long> list = new ArrayList<>(collection.getCollection().keySet());
+            StringBuilder check = new StringBuilder();
+            list.stream()
+                    .filter(e -> e > id)
+                    .forEach(e -> {remove(e);
+                    check.append("yes");});
+            if (check.length() == 0){System.out.println("В коллекции нет элементов с ID больше данного");;
             }
-            for (Long key : list) {
-                remove(key);
-            }
+            else {System.out.println("Все элементы с ID больше данного удалены");}
         } else {
             if (id <= 0) {
                 System.out.println("ID не может быть меньше 1");
@@ -363,22 +355,23 @@ public class Receiver {
      * @param id
      */
     public void replaceGreater(Long id) {
-        if (collection.containsKey(id) && !collection.isEmpty() && (id > 0)) {
+        if (collection.getCollection().containsKey(id) && !collection.getCollection().isEmpty() && (id > 0)) {
             Dragon dragon = new Dragon(id);
-            if (dragon.makeValue() > collection.get(id).makeValue()) {
-                System.out.println("Введённое значение больше имеющегося");
-                LocalDate temp = collection.get(id).getCreationDate();
-                collection.replace(id, dragon);
-                dragon.setCreationDate(temp);
-                System.out.println("Дракон успешно заменён");
+            StringBuilder builder = new StringBuilder();
+            collection.getCollection().entrySet().stream()
+                    .filter(e -> e.getKey().equals(id))
+                    .filter(e -> e.getValue().makeValue() < dragon.makeValue())
+                    .forEach(e -> {e.setValue(dragon); builder.append("yes");});
+            if (builder.length() == 0){
+                System.out.println("Замены не произошло, значение оказалось меньше или равно.");
             } else {
-                System.out.println("Введённое значение не больше имеющегося, замены не произошло");
+                System.out.println("Замена успешно произошла!");
             }
         } else {
             if (id <= 0) {
                 System.out.println("ID не может быть меньше 1");
             } else {
-                if (collection.isEmpty()) {
+                if (collection.getCollection().isEmpty()) {
                     System.out.println("Коллекция пуста! Добавьте этементы в коллекцию, чтобы продолжить.");
                 } else {
                     System.out.println("Такого дракона в коллекции нет, попробуйте ввести другой ID");
@@ -392,19 +385,9 @@ public class Receiver {
      * Метод для реализации команды min_by_name
      */
     public void minByName() {
-        if (!collection.isEmpty()) {
-            List<Dragon> list = Collections.list(collection.elements());
-            Dragon minDragon = null;
-            SortedSet<String> set = new TreeSet<String>();
-            for (Dragon dragon : list) {
-                set.add(dragon.getName());
-            }
-            for (Dragon dragon : list) {
-                if (dragon.getName().equals(set.first())) {
-                    minDragon = dragon;
-                }
-            }
-            System.out.println(minDragon.toString());
+        if (!collection.getCollection().isEmpty()) {
+            System.out.println(collection.getCollection().values().stream()
+                    .min(Comparator.comparing(Dragon::getName)).get());
         } else {
             System.out.println("Коллекция пуста! Добавьте элементы в коллекцию, чтобы продолжить.");
         }
@@ -415,27 +398,13 @@ public class Receiver {
      * Метод для реализации команды print_unique_killer
      */
     public void printUniqueKiller() {
-        if (!collection.isEmpty()) {
-            List<Dragon> list = Collections.list(collection.elements());
-            List<Person> arrayList = new ArrayList<>();
-            Set<Person> removedPersons = new HashSet<>();
-            for (Dragon dragon : list) {
-                if (dragon.getKiller() != null) {
-                    if (arrayList.contains(dragon.getKiller()) || removedPersons.contains(dragon.getKiller())) {
-                        arrayList.remove(dragon.getKiller());
-                        removedPersons.add(dragon.getKiller());
-                    } else {
-                        arrayList.add(dragon.getKiller());
-                    }
-
-                }
-            }
-            for (Person person : arrayList) {
-                System.out.println(person.toString());
-            }
-            if (arrayList.isEmpty()){
-                System.out.println("Нет уникальных значений");
-            }
+        if (!collection.getCollection().isEmpty()) {
+            System.out.println("Вывод всех уникальных полей killer:");
+            collection.getCollection().values().stream()
+                    .map(Dragon::getKiller)
+                    .distinct()
+                    .filter(Objects::nonNull)
+                    .forEach(System.out::println);
         } else {
             System.out.println("Коллекция пуста! Добавьте элементы в коллекцию чтобы продолжить.");
         }
@@ -447,16 +416,12 @@ public class Receiver {
      * Метод для реализации команды print_field_ascending_description
      */
     public void printFieldAscendDesc() {
-        if (!collection.isEmpty()) {
-            Set<Long> keySet = collection.keySet();
-            Set<String> sortedSet = new TreeSet<>();
+        if (!collection.getCollection().isEmpty()) {
             System.out.println("Вывод полей description всех драконов в коллекции в порядке возрастания:");
-            for (Long key : keySet) {
-                sortedSet.add(collection.get(key).getDescription());
-            }
-            for (String description : sortedSet) {
-                System.out.println(description);
-            }
+            collection.getCollection().entrySet()
+                    .stream().map(Map.Entry::getValue)
+                    .map(Dragon::getDescription)
+                    .sorted().forEach(System.out::println);
         } else {
             System.out.println("Коллекция пуста! Добавьте элементы в коллекцию чтобы продолжить.");
         }
@@ -480,11 +445,11 @@ public class Receiver {
     }
 
     public Hashtable<Long, Dragon> getCollection() {
-        return collection;
+        return collection.getCollection();
     }
 
     public void setCollection(Hashtable<Long, Dragon> collection) {
-        this.collection = collection;
+        this.collection.setCollection(collection);
     }
 
 

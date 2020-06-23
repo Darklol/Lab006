@@ -1,5 +1,5 @@
-import Data.Invoker;
-import Data.Receiver;
+import Commands.Invoker;
+import Commands.Receiver;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
@@ -11,7 +11,6 @@ public class Main {
         Receiver receiver = new Receiver();
 
         Invoker invoker = new Invoker(receiver);
-        //testing comment
         try {
             receiver.getFile(args[0]);
         } catch (IOException  e) {

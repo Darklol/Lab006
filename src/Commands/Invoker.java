@@ -1,6 +1,4 @@
-package Data;
-
-import Commands.*;
+package Commands;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;

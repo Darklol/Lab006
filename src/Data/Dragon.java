@@ -195,7 +195,7 @@ public class Dragon {
      * @return
      */
     public long makeValue() {
-        return (id + 42) / id;
+        return (id + age + 42);
     }
 
     public void setCoordinates() {
