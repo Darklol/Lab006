@@ -1,5 +1,5 @@
-import Commands.Invoker;
-import Commands.Receiver;
+import Server.ServerInvoker;
+import App.Receiver;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ public class Main {
 
         Receiver receiver = new Receiver();
 
-        Invoker invoker = new Invoker(receiver);
+        ServerInvoker serverInvoker = new ServerInvoker(receiver);
         try {
             receiver.getFile(args[0]);
         } catch (IOException  e) {
@@ -29,7 +29,7 @@ public class Main {
         }
 
         while (true){
-            invoker.input();
+            serverInvoker.input();
         }
 
     }

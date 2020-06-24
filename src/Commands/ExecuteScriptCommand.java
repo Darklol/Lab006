@@ -1,5 +1,7 @@
 package Commands;
 
+import App.Receiver;
+
 import java.io.IOException;
 
 /**
@@ -11,25 +13,16 @@ public class ExecuteScriptCommand extends Command{
     }
 
     @Override
-    public void execute(String[] arguments) {
-        if (arguments.length >= needArguments()) {
-            if (arguments.length > needArguments()) {
-                System.out.println("Введено больше аргументов, чем требуется команде. " +
-                        "(Требуется: " + needArguments() + ").\nВсе остальные аргументы будут проигнорированы.");
-            }
-            try {
+    public String execute(String[] arguments) {
+        if (arguments.length > needArguments()) return "Слишком много аргументов! Аргументы будут проигнорированы.";
                 try {
-                    receiver.executeScript(arguments[0]);
+                    return receiver.executeScript(arguments[0]);
                 } catch (IOException e) {
                     System.out.println("Файл не найден!");
-                }
-            } catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                 System.out.println("Неправильный ввод аргумента!");
             }
-        } else {
-            System.out.println("Недостаточно аргументов для выполнения команды! " +
-                    "(Требуемое количество: " + needArguments() + ")");
-        }
+                return "Неизвестная ошибка при попытке исполнения команды";
     }
 
     @Override

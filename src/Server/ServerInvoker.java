@@ -1,4 +1,7 @@
-package Commands;
+package Server;
+
+import App.Receiver;
+import Commands.*;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -8,17 +11,17 @@ import java.util.Scanner;
  * По паттерну "команда"
  * Класс, вызывающий команды
  */
-public class Invoker {
+public class ServerInvoker {
 
     private Scanner scanner = new Scanner(System.in);
     private Receiver receiver;
-    private HashMap<String,Command> commandsName = new HashMap<String,Command>();
+    private HashMap<String, Command> commandsName = new HashMap<String,Command>();
 
     /**
      * стандартный конструктор, устанавливающий экземпляр ресивера и инициализирующий коллекцию команд
      * @param receiver
      */
-    public Invoker(Receiver receiver){
+    public ServerInvoker(Receiver receiver){
         this.receiver = receiver;
         addCommandsNames();
     }
@@ -26,7 +29,7 @@ public class Invoker {
     /**
      * пустой конструктор, нужен для работы команды help
      */
-    public Invoker(){
+    public ServerInvoker(){
         addCommandsNames();
     };
 
@@ -81,9 +84,7 @@ public class Invoker {
         commandsName.put(new UpdateCommand(receiver).commandName(), new UpdateCommand(receiver));
         commandsName.put(new RemoveKeyCommand(receiver).commandName(), new RemoveKeyCommand(receiver));
         commandsName.put(new ClearCommand(receiver).commandName(),new ClearCommand(receiver));
-        commandsName.put(new SaveCommand(receiver).commandName(),new SaveCommand(receiver));
         commandsName.put(new ExecuteScriptCommand(receiver).commandName(), new ExecuteScriptCommand(receiver));
-        commandsName.put(new ExitCommand(receiver).commandName(),new ExitCommand(receiver));
         commandsName.put(new RemoveGreaterKeyCommand(receiver).commandName(),new RemoveGreaterKeyCommand(receiver));
         commandsName.put(new ReplaceIfGreaterCommand(receiver).commandName(),new ReplaceIfGreaterCommand(receiver));
         commandsName.put(new RemoveGreaterCommand(receiver).commandName(),new RemoveGreaterCommand(receiver));

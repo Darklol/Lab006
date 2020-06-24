@@ -1,12 +1,13 @@
 package Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
  * класс Dragon, элементы этого класса наполняют коллекцию
  */
-public class Dragon {
+public class Dragon implements Comparable<Dragon>, Serializable {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -239,5 +240,10 @@ public class Dragon {
 
     public void setKiller(Person killer) {
         this.killer = killer;
+    }
+
+    @Override
+    public int compareTo(Dragon o) {
+        return Long.compare(makeValue(),o.makeValue());
     }
 }

@@ -1,5 +1,7 @@
 package Commands;
 
+import App.Receiver;
+
 /**
  *  Абстрактный класс Команда
  *  Описывает общее поведение всех команд
@@ -11,7 +13,7 @@ public abstract class Command {
      */
     public Receiver receiver;
 
-    public abstract void execute(String[] arguments);
+    public abstract String execute(String[] arguments);
 
     public Command(Receiver receiver) {
         this.receiver = receiver;
