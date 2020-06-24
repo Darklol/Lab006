@@ -7,12 +7,12 @@ import App.Receiver;
  */
 public class ClearCommand extends Command {
     public ClearCommand(){}
-    public ClearCommand(Receiver receiver, String[] arguments) {
-        super(receiver, arguments);
+    public ClearCommand(Receiver receiver) {
+        super(receiver);
     }
 
     @Override
-    public String execute() {
+    public String execute(String[] arguments) {
         if (arguments.length > needArguments()) return "Слишком много аргументов! Лишние " +
                 "аргументы будут проигнорированы.";
         return receiver.clear();

@@ -6,8 +6,7 @@ import App.SerializationManager;
 import Server.RegisteredCommands;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
+import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.NoSuchElementException;
@@ -23,9 +22,9 @@ public class Client {
     private Receiver receiver;
     private RegisteredCommands commands;
     private ByteBuffer byteBuffer;
-    private DatagramChannel channel;
-    private SocketAddress address;
-    public static int BUFFER_SIZE = 65536;
+    private DatagramSocket socket;
+    private SocketAddress socketAddress;
+    public final int BUFFER_SIZE = 65536;
 
     /**
      * стандартный конструктор, устанавливающий экземпляр ресивера и инициализирующий коллекцию команд
@@ -35,19 +34,21 @@ public class Client {
         commands = new RegisteredCommands();
     }
 
-    public void connect(String host, int port) {
-        address = new InetSocketAddress(host, port);
+    public void connect(String host, int port) throws IOException {
         try {
-            channel = DatagramChannel.open();
-            channel.configureBlocking(false);
-            channel.connect(address);
-        } catch (IOException e) {
-            System.out.println("Ошибка подключения");
+            InetAddress address = InetAddress.getByName(host);
+            if (address == null) throw new NullPointerException();
+            System.out.println("Подключение к " + address);
+            socketAddress = new InetSocketAddress(address, port);
+            socket = new DatagramSocket();
+            socket.connect(socketAddress);
+        } catch (NullPointerException e) {
+            System.out.println("Введенного адреса не существует!");
         }
     }
 
     public void inputSendAndGetAnswer() throws IOException {
-        System.out.println("Введите команду:");
+        try {System.out.println("Введите команду:");
         String string = null;
         try {
             string = scanner.nextLine().trim();
@@ -67,20 +68,20 @@ public class Client {
             return;}
         Request request = new Request(commands.getCommandsName().get(input[0]), arguments);
         byte[] requestInBytes = SerializationManager.writeObject(request);
-        byteBuffer = ByteBuffer.wrap(requestInBytes);
-        byteBuffer.flip();
-        channel.send(byteBuffer, address);
-        byteBuffer.clear();
-        address = channel.receive(byteBuffer);
-        byte[] responseInBytes = new byte[byteBuffer.remaining()];
-        byteBuffer.get(requestInBytes);
-        System.out.println("Data Received");
-        try {
-            Response response = SerializationManager.readObject(responseInBytes);
-            System.out.println(response.getAnswer());
-        } catch (ClassNotFoundException e) {
-            System.out.println("Что-то пошло не так.");
-        }
+        DatagramPacket packet = new DatagramPacket(requestInBytes, requestInBytes.length, socketAddress);
+        socket.send(packet);
+        System.out.println("Запрос отправлен на сервер...");
+        byte[] answerInBytes = new byte[BUFFER_SIZE];
+        packet = new DatagramPacket(answerInBytes, answerInBytes.length);
+        socket.receive(packet);
+        Response response = SerializationManager.readObject(answerInBytes);
+        System.out.println("Получен ответ от сервера: ");
+        System.out.println(response.getAnswer());
+    } catch (IOException e) {
+        System.out.println("Сервер в данный момент недоступен...");
+    } catch (ClassNotFoundException e) {
+        System.out.println("Клиент ждал ответ в виде Response, а получил что-то непонятное...");
+    }
 
     }
 

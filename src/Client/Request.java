@@ -12,4 +12,12 @@ public class Request implements Serializable {
         this.command = command;
         this.arguments = arguments;
     }
+
+    public String[] getArguments() {
+        return arguments;
+    }
+
+    public Command getCommand() {
+        return command;
+    }
 }

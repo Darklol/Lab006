@@ -1,9 +1,13 @@
 package Server;
 
 import App.Receiver;
+import App.Response;
 import App.SerializationManager;
+import Client.Request;
 import Commands.*;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -22,6 +26,7 @@ public class Server {
     private byte[] buffer;
     private Receiver receiver;
     private RegisteredCommands commands;
+    public final int BUFFER_SIZE = 65536;
 
     /**
      * стандартный конструктор, устанавливающий экземпляр ресивера и инициализирующий коллекцию команд
@@ -29,9 +34,16 @@ public class Server {
      */
     public Server(Receiver receiver){
         this.receiver = receiver;
-        commands = new RegisteredCommands(receiver);
+        commands = new RegisteredCommands();
+        buffer = new byte[BUFFER_SIZE];
     }
 
+    public void connect(int port) throws IOException {
+        address = new InetSocketAddress(port);
+        channel = DatagramChannel.open();
+        channel.configureBlocking(false);
+        channel.bind(address);
+    }
     /**
      * пустой конструктор, нужен для работы команды help
      */
@@ -41,7 +53,7 @@ public class Server {
 
     /**
      * Метод, использующийся для работы команды execute_script
-     * @param commandLine
+     *
      */
 //    public void execute(String commandLine){
 //        String[] input = commandLine.split("\\s+");
@@ -62,11 +74,14 @@ public class Server {
                 do {
                     address = channel.receive(byteBuffer);
                 } while (address == null);
-                String[] input = SerializationManager.readObject(buffer);
-                System.out.println("Сервер получил данные ввода " + input);
-
+                Request request = SerializationManager.readObject(buffer);
+                System.out.println("Сервер получил команду " + request.getCommand().commandName());
+                Command command = request.getCommand();
+                command.setReceiver(receiver);
+                String result = command.execute(request.getArguments());
+                System.out.println("Команда " + command + " выполнена, посылаю ответ клиенту...");
                 Response response = new Response(result);
-                byte[] answer = responseSerializationManager.writeObject(response);
+                byte[] answer = SerializationManager.writeObject(response);
                 byteBuffer = ByteBuffer.wrap(answer);
                 channel.send(byteBuffer, address);
             }
