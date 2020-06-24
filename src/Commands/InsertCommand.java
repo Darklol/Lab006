@@ -8,7 +8,7 @@ import java.io.IOException;
  *  Команда insert
  */
 public class InsertCommand extends Command {
-
+    public InsertCommand(){}
     public InsertCommand(Receiver receiver) {
         super(receiver);
     }

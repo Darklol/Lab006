@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда print_field_ascending_description
  */
 public class PrintAscendingDescCommand extends Command {
-
+    public PrintAscendingDescCommand(){}
     public PrintAscendingDescCommand(Receiver receiver) {
         super(receiver);
     }

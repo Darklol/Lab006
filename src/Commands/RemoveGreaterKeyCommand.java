@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда remove_if_greater_key
  */
 public class RemoveGreaterKeyCommand extends Command {
-
+    public RemoveGreaterKeyCommand(){}
     public RemoveGreaterKeyCommand(Receiver receiver) {
         super(receiver);
     }

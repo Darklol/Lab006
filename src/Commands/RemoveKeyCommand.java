@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда remove_key
  */
 public class RemoveKeyCommand extends Command {
-
+    public RemoveKeyCommand(){}
     public RemoveKeyCommand(Receiver receiver){
         super(receiver);
     }

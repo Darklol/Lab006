@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда min_by_name
  */
 public class MinByNameCommand extends Command {
-
+    public MinByNameCommand(){}
     public MinByNameCommand(Receiver receiver) {
         super(receiver);
     }

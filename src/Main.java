@@ -1,4 +1,4 @@
-import Server.ServerInvoker;
+import Server.Server;
 import App.Receiver;
 import com.google.gson.JsonSyntaxException;
 
@@ -10,7 +10,7 @@ public class Main {
 
         Receiver receiver = new Receiver();
 
-        ServerInvoker serverInvoker = new ServerInvoker(receiver);
+        Server server = new Server(receiver);
         try {
             receiver.getFile(args[0]);
         } catch (IOException  e) {
@@ -29,7 +29,7 @@ public class Main {
         }
 
         while (true){
-            serverInvoker.input();
+            server.input();
         }
 
     }

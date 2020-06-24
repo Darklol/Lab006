@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда update
  */
 public class UpdateCommand extends Command {
-
+    public UpdateCommand(){}
     public UpdateCommand(Receiver receiver) {
         super(receiver);
     }

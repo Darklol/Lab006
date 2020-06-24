@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда info
  */
 public class InfoCommand extends Command {
-
+    public InfoCommand(){}
     public InfoCommand(Receiver receiver) {
         super(receiver);
     }

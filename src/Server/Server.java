@@ -2,17 +2,58 @@ package Server;
 
 import App.Receiver;
 import App.SerializationManager;
-import com.google.gson.internal.$Gson$Preconditions;
+import Commands.*;
 
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
+/**
+ * По паттерну "команда"
+ * Класс, вызывающий команды
+ */
 public class Server {
-        private DatagramChannel channel;
-        private SocketAddress address;
-        private Receiver receiver;
-        private byte[] buffer;
+
+    private DatagramChannel channel;
+    private SocketAddress address;
+    private byte[] buffer;
+    private Receiver receiver;
+    private RegisteredCommands commands;
+
+    /**
+     * стандартный конструктор, устанавливающий экземпляр ресивера и инициализирующий коллекцию команд
+     * @param receiver
+     */
+    public Server(Receiver receiver){
+        this.receiver = receiver;
+        commands = new RegisteredCommands(receiver);
+    }
+
+    /**
+     * пустой конструктор, нужен для работы команды help
+     */
+    public Server(){
+
+    };
+
+    /**
+     * Метод, использующийся для работы команды execute_script
+     * @param commandLine
+     */
+//    public void execute(String commandLine){
+//        String[] input = commandLine.split("\\s+");
+//        String[] arguments = new String[input.length-1];
+//        System.arraycopy(input, 1, arguments, 0, arguments.length);
+//        if (commandsName.containsKey(input[0])){
+//            commandsName.get(input[0]).execute(arguments);
+//        } else {
+//            System.out.println("Такой команды не существует. Проверьте правильность ввода команды в скрипте.");
+//        }
+//
+//    }
 
     public void run() {
         try {
@@ -23,10 +64,7 @@ public class Server {
                 } while (address == null);
                 String[] input = SerializationManager.readObject(buffer);
                 System.out.println("Сервер получил данные ввода " + input);
-                String result = processCommand(application, command);
-                log.info("Server receive command " + command.toString());
-                System.out.println("Команда " + command + " выполнена, посылаю ответ клиенту...");
-                log.info("Command " + command.toString() + " is completed, send an answer to the client");
+
                 Response response = new Response(result);
                 byte[] answer = responseSerializationManager.writeObject(response);
                 byteBuffer = ByteBuffer.wrap(answer);
@@ -43,4 +81,13 @@ public class Server {
             e.printStackTrace();
         }
     }
+    public String inputResult(String[] input){
+        System.out.println("Введите команду:");
+        String[] arguments = new String[input.length-1];
+        System.arraycopy(input, 1, arguments, 0, arguments.length);
+        if (!commands.getCommandsName().containsKey(input[0])) return "Такой команды не существует!";
+        return commands.getCommandsName().get(input[0]).execute(arguments);
+    }
+
+
 }

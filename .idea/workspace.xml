@@ -1,57 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="24de4c12-9790-4ee0-aff2-ebcc76bce268" name="Default Changelist" comment="all commands now return string&#10;save and exit commands deleted">
-      <change afterPath="$PROJECT_DIR$/src/App/Response.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/App/SerializationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Client/ClientInvoker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Data/DragonCollection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Server/ServerInvoker.java" afterDir="false" />
+    <list default="true" id="24de4c12-9790-4ee0-aff2-ebcc76bce268" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Client/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Client/Request.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Server/RegisteredCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/ClearCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/ClearCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/ExecuteScriptCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/ExecuteScriptCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/ExitCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/ExitCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/HelpCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/HelpCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/InfoCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/InfoCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/InsertCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/InsertCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/MinByNameCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/MinByNameCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/PrintAscendingDescCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/PrintAscendingDescCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/PrintUniqueKillerCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/PrintUniqueKillerCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/RemoveGreaterCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/RemoveGreaterCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/RemoveGreaterKeyCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/RemoveGreaterKeyCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/RemoveKeyCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/RemoveKeyCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/ReplaceIfGreaterCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/ReplaceIfGreaterCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/SaveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/SaveCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/ShowCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/ShowCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Commands/UpdateCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Commands/UpdateCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Data/Dragon.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Data/Dragon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Data/Invoker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Data/Receiver$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Data/Receiver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Lab006/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab006/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Receiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Client/ClientInvoker.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ClearCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/ExecuteScriptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ExecuteScriptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ExitCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/HelpCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/InfoCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/InsertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Invoker.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/MinByNameCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/MinByNameCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/PrintAscendingDescCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PrintAscendingDescCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/PrintUniqueKillerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/PrintUniqueKillerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App/Receiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/RemoveGreaterCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/RemoveGreaterKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/RemoveGreaterKeyCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/RemoveKeyCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/ReplaceIfGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ReplaceIfGreaterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/SaveCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/ShowCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Commands/UpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Commands/UpdateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Data/Dragon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/Dragon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Server/ServerInvoker.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +121,8 @@
       <workItem from="1592924242410" duration="40000" />
       <workItem from="1592924364713" duration="372000" />
       <workItem from="1592939898238" duration="10266000" />
-      <workItem from="1592981579349" duration="10789000" />
+      <workItem from="1592981579349" duration="15292000" />
+      <workItem from="1592999442705" duration="9944000" />
     </task>
     <task id="LOCAL-00001" summary="testing comment">
       <created>1592925143773</created>
@@ -163,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592949847136</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="all commands now return string&#10;save and exit commands deleted">
+      <created>1592992673922</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1592992673922</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,10 +166,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1592942267986" />
-    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1592984786814">
+    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1593001510889">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1592984786814" />
+    <state x="574" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1593001510889" />
     <state x="498" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1592924435125">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -196,45 +178,45 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="566" y="297" width="403" height="237" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1536.824@0.0.1536.824" timestamp="1592988077341" />
-    <state x="306" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1592992380186">
+    <state x="306" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1593003773174">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="306" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1592992380186" />
-    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1592992444561">
+    <state x="306" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1593003773174" />
+    <state x="393" y="0" key="CommitChangelistDialog2" timestamp="1592992671709">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1592992444561" />
+    <state x="393" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1592992671709" />
     <state x="473" y="153" key="FileChooserDialogImpl" timestamp="1592924534234">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="473" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592924534234" />
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1592982545192">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1592999385290">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1592982545192" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1592982545192">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1592999385290" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1592999385290">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1592982545192" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1592982545192">
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1592999385290" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1592999385290">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1592982545192" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1592982545192">
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1592999385290" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1592999385290">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1592982545192" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1592999385290" />
     <state x="249" y="0" key="SettingsEditor" timestamp="1592924559244">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1592924559244" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592949906046">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1592992678098">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592949906046" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1592981964280">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1592992678098" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1592999704097">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1592981964280" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1592999704097" />
   </component>
 </project>

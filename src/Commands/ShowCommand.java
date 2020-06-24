@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда show
  */
 public class ShowCommand extends Command {
-
+    public ShowCommand(){}
     public ShowCommand(Receiver receiver) {
         super(receiver);
     }

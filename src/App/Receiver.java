@@ -2,7 +2,7 @@ package App;
 
 import Data.Dragon;
 import Data.DragonCollection;
-import Server.ServerInvoker;
+import Server.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -30,9 +30,9 @@ public class Receiver {
      * Метод для реализации команды Help
      */
     public String help() {
-        ServerInvoker serverInvoker = new ServerInvoker();
+        Server server = new Server();
         StringBuilder builder = new StringBuilder("Описание всех доступных команд: \n");
-        serverInvoker.getCommandsName().values()
+        new RegisteredCommands().getCommandsName().values()
                 .forEach(e -> builder.append(e.commandName() + " : " + e.manual() + "\n"));
         return builder.toString();
     }
@@ -214,28 +214,28 @@ public class Receiver {
      * @param path
      * @throws IOException
      */
-    public String executeScript(String path) throws IOException {
-        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(new File(path)));
-        byte[] contents = new byte[1024];
-        int bytesRead = 0;
-        String strFileContents = "";
-        while ((bytesRead = stream.read(contents)) != -1) {
-            strFileContents += new String(contents, 0, bytesRead);
-        }
-        Scanner scanner = new Scanner(strFileContents);
-        String line;
-        Hashtable<Long, Dragon> tempCollection = this.collection.getCollection();
-        Receiver virtualReceiver = new Receiver();
-        virtualReceiver.collection.setCollection(tempCollection);
-        ServerInvoker virtualServerInvoker = new ServerInvoker(virtualReceiver);
-        System.out.println("Приступаю к выполнению скрипта " + path);
-        while (scanner.hasNextLine()) {
-            line = scanner.nextLine();
-            virtualServerInvoker.execute(line);
-        }
-        collection.setCollection(tempCollection);
-        return "Выполнение скрипта завершено.\n";
-    }
+//    public String executeScript(String path) throws IOException {
+//        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(new File(path)));
+//        byte[] contents = new byte[1024];
+//        int bytesRead = 0;
+//        String strFileContents = "";
+//        while ((bytesRead = stream.read(contents)) != -1) {
+//            strFileContents += new String(contents, 0, bytesRead);
+//        }
+//        Scanner scanner = new Scanner(strFileContents);
+//        String line;
+//        Hashtable<Long, Dragon> tempCollection = this.collection.getCollection();
+//        Receiver virtualReceiver = new Receiver();
+//        virtualReceiver.collection.setCollection(tempCollection);
+//        Server virtualServer = new Server(virtualReceiver);
+//        System.out.println("Приступаю к выполнению скрипта " + path);
+//        while (scanner.hasNextLine()) {
+//            line = scanner.nextLine();
+//            virtualServer.execute(line);
+//        }
+//        collection.setCollection(tempCollection);
+//        return "Выполнение скрипта завершено.\n";
+//    }
 
     /**
      * Метод для реализации команды exit

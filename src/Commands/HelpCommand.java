@@ -6,6 +6,7 @@ import App.Receiver;
  *  Команда help
  */
 public class HelpCommand extends Command {
+    public HelpCommand(){}
     public HelpCommand(Receiver receiver) {
         super(receiver);
     }

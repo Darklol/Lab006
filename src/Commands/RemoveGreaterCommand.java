@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда remove_if_greater
  */
 public class RemoveGreaterCommand extends Command {
-
+    public RemoveGreaterCommand(){}
     public RemoveGreaterCommand(Receiver receiver){
         super(receiver);
     }

@@ -6,7 +6,7 @@ import App.Receiver;
  *  Команда replace_if_greater
  */
 public class ReplaceIfGreaterCommand extends Command {
-
+    public ReplaceIfGreaterCommand(){}
     public ReplaceIfGreaterCommand(Receiver receiver) {
         super(receiver);
     }
