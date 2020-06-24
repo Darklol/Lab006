@@ -1,14 +1,15 @@
 package Client;
 
 import App.Receiver;
+import App.Request;
 import App.Response;
 import App.SerializationManager;
+import Data.DragonValidator;
 import Server.RegisteredCommands;
 
 import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
-import java.nio.channels.DatagramChannel;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -25,6 +26,7 @@ public class Client {
     private DatagramSocket socket;
     private SocketAddress socketAddress;
     public final int BUFFER_SIZE = 65536;
+    private boolean isConnected;
 
     /**
      * стандартный конструктор, устанавливающий экземпляр ресивера и инициализирующий коллекцию команд
@@ -47,8 +49,9 @@ public class Client {
         }
     }
 
+
     public void inputSendAndGetAnswer() throws IOException {
-        try {System.out.println("Введите команду:");
+        try {
         String string = null;
         try {
             string = scanner.nextLine().trim();
@@ -66,11 +69,17 @@ public class Client {
         if (!commands.getCommandsName().containsKey(input[0])){
             System.out.println("Такой команды не существует. Проверьте правильность ввода команды.");
             return;}
+        DragonValidator validator = new DragonValidator();
+        validator.setId((long)-1);
+        if (commands.getCommandsWithDragons().contains(input[0])
+                && arguments.length>0) {validator.setId(Long.parseLong(arguments[0]));
+        validator.validate(new Scanner(System.in), System.out);}
         Request request = new Request(commands.getCommandsName().get(input[0]), arguments);
+        if (!validator.getId().equals((long)-1)) request.setValidator(validator);
         byte[] requestInBytes = SerializationManager.writeObject(request);
         DatagramPacket packet = new DatagramPacket(requestInBytes, requestInBytes.length, socketAddress);
         socket.send(packet);
-        System.out.println("Запрос отправлен на сервер...");
+        System.out.println("Попытка отправки запроса...");
         byte[] answerInBytes = new byte[BUFFER_SIZE];
         packet = new DatagramPacket(answerInBytes, answerInBytes.length);
         socket.receive(packet);
@@ -79,27 +88,15 @@ public class Client {
         System.out.println(response.getAnswer());
     } catch (IOException e) {
         System.out.println("Сервер в данный момент недоступен...");
+        isConnected = socket.isConnected();
     } catch (ClassNotFoundException e) {
         System.out.println("Клиент ждал ответ в виде Response, а получил что-то непонятное...");
     }
 
     }
 
-    /**
-     * Метод, использующийся для работы команды execute_script
-     * @param commandLine
-     */
-//    public void execute(String commandLine){
-//        String[] input = commandLine.split("\\s+");
-//        String[] arguments = new String[input.length-1];
-//        System.arraycopy(input, 1, arguments, 0, arguments.length);
-//        if (commandsName.containsKey(input[0])){
-//            commandsName.get(input[0]).execute(arguments);
-//        } else {
-//            System.out.println("Такой команды не существует. Проверьте правильность ввода команды в скрипте.");
-//        }
-//
-//    }
 
-
+    public boolean isConnected() {
+        return isConnected;
+    }
 }

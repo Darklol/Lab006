@@ -3,7 +3,7 @@ package Server;
 import App.Receiver;
 import App.Response;
 import App.SerializationManager;
-import Client.Request;
+import App.Request;
 import Commands.*;
 
 import java.io.IOException;
@@ -11,8 +11,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -51,33 +49,26 @@ public class Server {
 
     };
 
-    /**
-     * Метод, использующийся для работы команды execute_script
-     *
-     */
-//    public void execute(String commandLine){
-//        String[] input = commandLine.split("\\s+");
-//        String[] arguments = new String[input.length-1];
-//        System.arraycopy(input, 1, arguments, 0, arguments.length);
-//        if (commandsName.containsKey(input[0])){
-//            commandsName.get(input[0]).execute(arguments);
-//        } else {
-//            System.out.println("Такой команды не существует. Проверьте правильность ввода команды в скрипте.");
-//        }
-//
-//    }
 
     public void run() {
         try {
             while (true) {
+                Scanner scanner = new Scanner(System.in);
                 ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
                 do {
+                    if (System.in.available()>0) {switch (scanner.nextLine().trim()){
+                        case "exit": System.out.println("Завершение работы сервера");
+                                    System.exit(0);
+                        case "save": SaveCommand save = new SaveCommand(receiver);
+                                    save.execute(new String[1]);
+                    }}
                     address = channel.receive(byteBuffer);
                 } while (address == null);
                 Request request = SerializationManager.readObject(buffer);
                 System.out.println("Сервер получил команду " + request.getCommand().commandName());
                 Command command = request.getCommand();
                 command.setReceiver(receiver);
+                receiver.setValidator(request.getValidator());
                 String result = command.execute(request.getArguments());
                 System.out.println("Команда " + command + " выполнена, посылаю ответ клиенту...");
                 Response response = new Response(result);
@@ -95,13 +86,6 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public String inputResult(String[] input){
-        System.out.println("Введите команду:");
-        String[] arguments = new String[input.length-1];
-        System.arraycopy(input, 1, arguments, 0, arguments.length);
-        if (!commands.getCommandsName().containsKey(input[0])) return "Такой команды не существует!";
-        return commands.getCommandsName().get(input[0]).execute(arguments);
     }
 
 

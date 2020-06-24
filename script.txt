@@ -1,6 +1,2 @@
-help
-min_by_name
-abrakadara
-abra kadabra
-insert 1
-show
+clear
+

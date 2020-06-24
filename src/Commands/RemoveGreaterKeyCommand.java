@@ -13,7 +13,7 @@ public class RemoveGreaterKeyCommand extends Command {
 
     @Override
     public String execute(String[] arguments) {
-        if (arguments.length > needArguments()) return "Слишком много аргументов! Аргументы будут проигнорированы.";
+        if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         try {
             return receiver.removeGreaterKey(Long.parseLong(arguments[0]));
         } catch (IllegalArgumentException e) {

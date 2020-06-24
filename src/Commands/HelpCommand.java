@@ -13,8 +13,6 @@ public class HelpCommand extends Command {
 
     @Override
     public String execute(String[] arguments) {
-        if (arguments.length > needArguments()) return "Слишком много аргументов! Лишние " +
-                "аргументы будут проигнорированы.";
         return receiver.help();
     }
 

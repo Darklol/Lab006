@@ -1,9 +1,11 @@
 package Data;
 
+import java.io.Serializable;
+
 /**
  * Type Coordinates Class
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     private long x;
     private Long y; //Значение поля должно быть больше -324, Поле не может быть null
 

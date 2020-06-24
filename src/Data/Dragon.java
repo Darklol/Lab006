@@ -39,8 +39,19 @@ public class Dragon implements Comparable<Dragon>, Serializable {
     /**
      * Конструктор, в котором вводятся значения полей с клавиатуры.
      * Тут же происходит проверка правильности значений.
-     * @param id
+     * @param
      */
+    public Dragon(DragonValidator validator){
+        age = validator.getAge();
+        name = validator.getName();
+        id = validator.getId();
+        coordinates = validator.getCoordinates();
+        creationDate = validator.getCreationDate();
+        description = validator.getDescription();
+        wingspan = validator.getWingspan();
+        color = validator.getColor();
+        killer = validator.getKiller();
+    }
     public Dragon(long id) {
         boolean wrongInput = true;
         this.id = id;
@@ -147,7 +158,7 @@ public class Dragon implements Comparable<Dragon>, Serializable {
             if (temp.trim().equals("yes")) {
                 wrongInput = false;
                 System.out.println("Введите данные убийцы дракона");
-                killer = new Person("string");
+                killer = new Person("string", null, null, null);
             } else {
                 if (temp.trim().equals("no")) {
                     wrongInput = false;

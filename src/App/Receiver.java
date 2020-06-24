@@ -2,6 +2,7 @@ package App;
 
 import Data.Dragon;
 import Data.DragonCollection;
+import Data.DragonValidator;
 import Server.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -17,6 +18,7 @@ import java.util.*;
 public class Receiver {
 
     private DragonCollection collection;
+    private DragonValidator validator;
 
     /**
      * Стандартный конструктор
@@ -70,7 +72,7 @@ public class Receiver {
         if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
         if (id <= 0) return "ID не может быть меньше нуля!";
         if (collection.getCollection().containsKey(id)) return "Дракон с таким ID уже существует!";
-        collection.getCollection().put(id, new Dragon(id));
+        collection.getCollection().put(id, new Dragon(validator));
         return "Дракон успешно добавлен!";
     }
 
@@ -83,7 +85,7 @@ public class Receiver {
         if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
         if (id <= 0) return "ID не может быть меньше нуля!";
         if (collection.getCollection().containsKey(id)) return "Дракон с таким ID уже существует!";
-        collection.getCollection().replace(id, new Dragon(id));
+        collection.getCollection().replace(id, new Dragon(validator));
         return "Данные о драконе успешно изменены!";
     }
 
@@ -214,28 +216,51 @@ public class Receiver {
      * @param path
      * @throws IOException
      */
-//    public String executeScript(String path) throws IOException {
-//        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(new File(path)));
-//        byte[] contents = new byte[1024];
-//        int bytesRead = 0;
-//        String strFileContents = "";
-//        while ((bytesRead = stream.read(contents)) != -1) {
-//            strFileContents += new String(contents, 0, bytesRead);
-//        }
-//        Scanner scanner = new Scanner(strFileContents);
-//        String line;
-//        Hashtable<Long, Dragon> tempCollection = this.collection.getCollection();
-//        Receiver virtualReceiver = new Receiver();
-//        virtualReceiver.collection.setCollection(tempCollection);
-//        Server virtualServer = new Server(virtualReceiver);
-//        System.out.println("Приступаю к выполнению скрипта " + path);
-//        while (scanner.hasNextLine()) {
-//            line = scanner.nextLine();
-//            virtualServer.execute(line);
-//        }
-//        collection.setCollection(tempCollection);
-//        return "Выполнение скрипта завершено.\n";
-//    }
+    public String executeScript(String path) throws IOException {
+        BufferedInputStream stream = new BufferedInputStream(new FileInputStream(new File(path)));
+        byte[] contents = new byte[1024];
+        int bytesRead = 0;
+        String strFileContents = "";
+        while ((bytesRead = stream.read(contents)) != -1) {
+            strFileContents += new String(contents, 0, bytesRead);
+        }
+        Scanner scanner = new Scanner(strFileContents);
+        String line = new String();
+        String[] argument = new  String[1];
+        RegisteredCommands commands = new RegisteredCommands();
+        Receiver virtualReceiver = new Receiver();
+        DragonValidator virtualValidator = new DragonValidator();
+        virtualReceiver.setValidator(virtualValidator);
+        virtualReceiver.setCollection(collection);
+        StringBuilder builder = new StringBuilder();
+        OutputStream empty = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+
+            }
+        };
+        builder.append("Приступаю к выполнению скрипта ").append(path).append("\n");
+        while (scanner.hasNextLine()) {
+            String[] temp = scanner.nextLine().split("\\s+");
+            if (temp.length>0) line = temp[0];
+            if (temp.length>=2) argument[0] = temp[1];
+            if (!line.equals(null)) argument[0] = line;
+            if (commands.getCommandsName().containsKey(line)){
+                commands.getCommandsName().get(line).setReceiver(virtualReceiver);
+                try {if (commands.getCommandsWithDragons().contains(line)){
+                        virtualValidator.validate(scanner, new PrintStream(empty));
+
+                }
+                builder.append(commands.getCommandsName().get(line).execute(argument));
+            } catch (NoSuchElementException e) {
+                builder.delete(0, builder.length());
+                builder.append("Ошибка при добавлении дракона. Скрипт остановлен\n");
+            }
+            }
+        }
+        builder.append("Выполнение скрипта завершено.\n");
+        return builder.toString();
+    }
 
     /**
      * Метод для реализации команды exit
@@ -294,7 +319,7 @@ public class Receiver {
     public String replaceGreater(Long id) {
         if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
         if (id <= 0) return "ID не может быть меньше нуля!";
-        Dragon dragon = new Dragon(id);
+        Dragon dragon = new Dragon(validator);
         StringBuilder builder = new StringBuilder();
         collection.getCollection().entrySet().stream()
                 .filter(e -> e.getKey().equals(id))
@@ -329,7 +354,7 @@ public class Receiver {
                 .map(Dragon::getKiller)
                 .distinct()
                 .filter(Objects::nonNull)
-                .forEach(e -> builder.append(e.toString()));
+                .forEach(e -> builder.append(e.toString()).append("\n"));
         return builder.toString();
 
 }
@@ -348,6 +373,10 @@ public class Receiver {
             return builder.toString();
     }
 
+    public void setValidator(DragonValidator validator) {
+        this.validator = validator;
+    }
+
     /**
      * Getters and setters
      */
@@ -357,9 +386,7 @@ public class Receiver {
         return collection.getCollection();
     }
 
-    public void setCollection(Hashtable<Long, Dragon> collection) {
-        this.collection.setCollection(collection);
+    public void setCollection(DragonCollection collection) {
+        this.collection = collection;
     }
-
-
 }

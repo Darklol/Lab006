@@ -13,8 +13,7 @@ public class MinByNameCommand extends Command {
 
     @Override
     public String execute(String[] arguments) {
-        if (arguments.length > needArguments()) return "Слишком много аргументов! Лишние " +
-                "аргументы будут проигнорированы.";
+        if (arguments.length<needArguments()) return "У команды должны быть аргументы!";
         return receiver.minByName();
     }
 
