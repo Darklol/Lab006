@@ -243,10 +243,10 @@ public class Receiver {
             String[] temp = scanner.nextLine().split("\\s+");
             if (temp.length>0) line = temp[0];
             if (temp.length>=2) argument[0] = temp[1];
-            if (!line.equals(null)) argument[0] = line;
-            if (commands.getCommandsName().containsKey(line)&& line.equals("execute_script")){
+            if (commands.getCommandsName().containsKey(line)&&!line.equals("execute_script")){
                 commands.getCommandsName().get(line).setReceiver(virtualReceiver);
                 try {if (commands.getCommandsWithDragons().contains(line)){
+                        virtualValidator.setId(Long.parseLong(argument[0]));
                         virtualValidator.validate(scanner, new PrintStream(empty));
 
                 }
