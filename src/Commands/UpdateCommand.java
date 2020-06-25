@@ -17,9 +17,8 @@ public class UpdateCommand extends Command {
         try {
             return receiver.update(Long.parseLong(arguments[0]));
         } catch (IllegalArgumentException e) {
-            System.out.println("Неправильный ввод аргумента!");
         }
-        return "Неизвестная ошибка при попытке исполнения команды";
+        return "Неправильный ввод аргумента!";
     }
 
     @Override

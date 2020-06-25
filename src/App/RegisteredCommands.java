@@ -1,4 +1,4 @@
-package Server;
+package App;
 
 import App.Receiver;
 import Commands.*;

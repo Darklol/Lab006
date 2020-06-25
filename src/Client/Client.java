@@ -5,7 +5,7 @@ import App.Request;
 import App.Response;
 import App.SerializationManager;
 import Data.DragonValidator;
-import Server.RegisteredCommands;
+import App.RegisteredCommands;
 
 import java.io.IOException;
 import java.net.*;
@@ -72,8 +72,13 @@ public class Client {
         DragonValidator validator = new DragonValidator();
         validator.setId((long)-1);
         if (commands.getCommandsWithDragons().contains(input[0])
-                && arguments.length>0) {validator.setId(Long.parseLong(arguments[0]));
-        validator.validate(new Scanner(System.in), System.out);}
+                && arguments.length>0) {
+            try {
+                validator.setId(Long.parseLong(arguments[0]));
+                validator.validate(new Scanner(System.in), System.out);
+            } catch (IllegalArgumentException e) {
+            }
+        }
         Request request = new Request(commands.getCommandsName().get(input[0]), arguments);
         if (!validator.getId().equals((long)-1)) request.setValidator(validator);
         byte[] requestInBytes = SerializationManager.writeObject(request);

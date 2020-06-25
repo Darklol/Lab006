@@ -19,11 +19,9 @@ public class ExecuteScriptCommand extends Command{
         try {
             return receiver.executeScript(arguments[0]);
         } catch (IllegalArgumentException e) {
-            System.out.println("Неправильный ввод аргумента!");
         } catch (IOException e){
-            System.out.println("Неверный путь к файлу!");
         }
-        return "Неизвестная ошибка при попытке исполнения команды";
+        return "Неправильный ввод аргумента!";
     }
 
     @Override
