@@ -32,7 +32,6 @@ public class Receiver {
      * Метод для реализации команды Help
      */
     public String help() {
-        Server server = new Server();
         StringBuilder builder = new StringBuilder("Описание всех доступных команд: \n");
         new RegisteredCommands().getCommandsName().values()
                 .forEach(e -> builder.append(e.commandName() + " : " + e.manual() + "\n"));
@@ -245,7 +244,7 @@ public class Receiver {
             if (temp.length>0) line = temp[0];
             if (temp.length>=2) argument[0] = temp[1];
             if (!line.equals(null)) argument[0] = line;
-            if (commands.getCommandsName().containsKey(line)){
+            if (commands.getCommandsName().containsKey(line)&& line.equals("execute_script")){
                 commands.getCommandsName().get(line).setReceiver(virtualReceiver);
                 try {if (commands.getCommandsWithDragons().contains(line)){
                         virtualValidator.validate(scanner, new PrintStream(empty));

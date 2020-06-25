@@ -9,7 +9,6 @@ import App.RegisteredCommands;
 
 import java.io.IOException;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -20,9 +19,7 @@ import java.util.Scanner;
 public class Client {
 
     private Scanner scanner = new Scanner(System.in);
-    private Receiver receiver;
     private RegisteredCommands commands;
-    private ByteBuffer byteBuffer;
     private DatagramSocket socket;
     private SocketAddress socketAddress;
     public final int BUFFER_SIZE = 65536;

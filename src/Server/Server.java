@@ -33,18 +33,13 @@ public class Server {
         buffer = new byte[BUFFER_SIZE];
     }
 
+
     public void connect(int port) throws IOException {
         address = new InetSocketAddress(port);
         channel = DatagramChannel.open();
         channel.configureBlocking(false);
         channel.bind(address);
     }
-    /**
-     * пустой конструктор, нужен для работы команды help
-     */
-    public Server(){
-
-    };
 
 
     public void run() {
