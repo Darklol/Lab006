@@ -83,7 +83,7 @@ public class Receiver {
     public String update(Long id) {
         if (collection.getCollection().isEmpty()) return "Коллекция пуста!";
         if (id <= 0) return "ID не может быть меньше нуля!";
-        if (collection.getCollection().containsKey(id)) return "Дракон с таким ID уже существует!";
+        if (!collection.getCollection().containsKey(id)) return "Такого дракона в коллекции нет!";
         collection.getCollection().replace(id, new Dragon(validator));
         return "Данные о драконе успешно изменены!";
     }
